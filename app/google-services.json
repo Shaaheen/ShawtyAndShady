@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "shawtyandshady-1150",
+    "project_number": "628255791760",
+    "name": "ShawtyAndShady"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628255791760:android:f5b9465eb57fe488",
+        "client_id": "android:me.shaaheen.shawtyandshady",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "me.shaaheen.shawtyandshady"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628255791760-2k4099ad6i8226pmt20ti4a181bg8f94.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.shaaheen.shawtyandshady",
+            "certificate_hash": "AC419E84FFD49830F74FE9DBC33772DB98552669"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
