@@ -20,29 +20,34 @@ public class MainActivity extends AppCompatActivity {
     EditText messageBox;
     Button submitButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        messageBox   = (EditText)findViewById(R.id.editText);
-        submitButton = (Button)findViewById(R.id.submitButton);
+        Firebase.setAndroidContext(this); //???
+
+        //Gets element objects from the layout
+        messageBox   = (EditText)findViewById(R.id.editText); //Text box for entering messages
+        submitButton = (Button)findViewById(R.id.submitButton); //Button to send messages
         submitButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
-                        sendMessage();
+                        sendMessage(); //When submit button clicked then launch sendMessage method
                     }
                 });
 
         System.out.println("BEFORE 1");
-        Firebase.setAndroidContext(this);
+        //Initialise Chat Manager with the reference to the database
         chatManager = new ChatManager("https://boiling-torch-6214.firebaseio.com/Messages");
         System.out.println("BEFORE HTTP");
     }
 
     private void sendMessage(){
+        //NB -- "CarlyCatzSnooze" is temp holder name - user needs to choose what username he wants
+        //Get text from the message box and send to the chat manager to sort out
         chatManager.sendMessage("CarlyCatzSnooze",messageBox.getText().toString());
     }
-
 
 
     @Override
