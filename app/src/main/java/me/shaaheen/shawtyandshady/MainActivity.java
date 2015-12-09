@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -14,10 +17,22 @@ import com.firebase.client.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     ChatManager chatManager;
+    EditText messageBox;
+    Button submitButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        messageBox   = (EditText)findViewById(R.id.editText);
+        submitButton = (Button)findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        sendMessage();
+                    }
+                });
+
         System.out.println("BEFORE 1");
         Firebase.setAndroidContext(this);
         chatManager = new ChatManager("https://boiling-torch-6214.firebaseio.com/Messages");
@@ -25,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendMessage(){
-
+        chatManager.sendMessage("CarlyCatzSnooze",messageBox.getText().toString());
     }
 
 
