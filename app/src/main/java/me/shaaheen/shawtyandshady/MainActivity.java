@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     ChatManager chatManager;
     EditText messageBox;
     Button submitButton;
-
+    protected static TextView messageDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this); //???
 
         //Gets element objects from the layout
+        messageDisplay = (TextView)findViewById(R.id.messageDisplay);
         messageBox   = (EditText)findViewById(R.id.editText); //Text box for entering messages
         submitButton = (Button)findViewById(R.id.submitButton); //Button to send messages
         submitButton.setOnClickListener(
@@ -36,39 +38,21 @@ public class MainActivity extends AppCompatActivity {
                         sendMessage(); //When submit button clicked then launch sendMessage method
                     }
                 });
-
-        System.out.println("BEFORE 1");
         //Initialise Chat Manager with the reference to the database
         chatManager = new ChatManager("https://boiling-torch-6214.firebaseio.com/Messages");
-        System.out.println("BEFORE HTTP");
     }
 
+    //Method to send Messages based off what is written the text box
     private void sendMessage(){
         //NB -- "CarlyCatzSnooze" is temp holder name - user needs to choose what username he wants
         //Get text from the message box and send to the chat manager to sort out
-        chatManager.sendMessage("CarlyCatzSnooze",messageBox.getText().toString());
+        chatManager.sendMessage("CarlyCatzSnooze", messageBox.getText().toString());
+        messageBox.setText(""); // Reset Text box to null
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    //Method to allow changes to the message display - Allows Chat Manager to change layout element
+    protected static void receiveMessage(String newMessage){
+        //Add to message on a new line to what is already being displayed
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

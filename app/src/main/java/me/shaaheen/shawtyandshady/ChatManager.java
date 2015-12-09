@@ -44,35 +44,31 @@ public class ChatManager {
             // Retrieve new posts as they are added to the database - NB!!!
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                Map<String, String> post = snapshot.getValue(Map.class);
+                Map<String, String> post = snapshot.getValue(Map.class); //Get the Map object that was written
                 System.out.println("Message is :" + post.get("Message"));
+                //MainActivity.receiveMessage(post.get("Message"));
             }
-            // ....
+
+            //METHODS NEEDED TO BE IMPLEMENTED FOR EVENT LISTENER - MUST BE ADDED TO
 
             // Get the data on a post that has changed
             @Override
             public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
-                //String title = (String) snapshot.child("title").getValue();
-                //System.out.println("The updated post title is " + title);
             }
 
-            // ....
             // Get the data on a post that has been removed
             @Override
             public void onChildRemoved(DataSnapshot snapshot) {
-                //String title = (String) snapshot.child("title").getValue();
-                //System.out.println("The blog post titled " + title + " has been deleted");
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
+
         });
 
     }
