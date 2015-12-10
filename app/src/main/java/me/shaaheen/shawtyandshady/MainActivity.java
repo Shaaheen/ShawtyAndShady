@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     //Method to allow changes to the message display - Allows Chat Manager to change layout element
     protected static void receiveMessage(String newMessage){
         //Add to message on a new line to what is already being displayed
+        messageDisplay.setText(messageDisplay.getText().toString() + newMessage + "\r\n");
     }
 
 }
