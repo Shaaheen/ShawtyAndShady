@@ -20,10 +20,10 @@ import java.util.Map;
 public class ChatManager {
     Firebase myFirebaseRef; //Link to Firebase online database - used as place to send and receive messages from
     MainActivity mainView;
-    int verifier;
+    ChildEventListener mainListener;
+
     //Constructor to connect to database
-    ChatManager(String firebaseURL,MainActivity main,int verfier) {
-        this.verifier = verfier;
+    ChatManager(String firebaseURL,MainActivity main) {
         myFirebaseRef = new Firebase(firebaseURL);
         this.mainView = main;
         startReceivingMessages();
@@ -51,8 +51,8 @@ public class ChatManager {
     //Method to add the neccessary event listeners to catch any new message entries on the database
     protected void startReceivingMessages(){
 
-        //Add event listener on database
-        myFirebaseRef.addChildEventListener(new ChildEventListener() {
+        //Create Event listener for all events(reading etc)
+        mainListener = new ChildEventListener() {
 
             // Retrieve new posts as they are added to the database - NB!!!
             @Override
@@ -60,7 +60,7 @@ public class ChatManager {
                 Map<String, String> post = snapshot.getValue(Map.class); //Get the Map object that was written
                 System.out.println("Message is :" + post.get("Message"));
 
-                mainView.receiveMessage(post.get("User"),post.get("Message"),verifier);
+                mainView.receiveMessage(post.get("User"),post.get("Message"));
             }
 
             //METHODS NEEDED TO BE IMPLEMENTED FOR EVENT LISTENER - MUST BE ADDED TO
@@ -83,7 +83,14 @@ public class ChatManager {
             public void onCancelled(FirebaseError firebaseError) {
             }
 
-        });
+        };
 
+        //Add event listener on database
+        myFirebaseRef.addChildEventListener(mainListener);
+
+    }
+
+    public void removeListeners(){
+        myFirebaseRef.removeEventListener(mainListener);
     }
 }

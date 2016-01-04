@@ -3,7 +3,10 @@
 
     <string name="defaultMsg"></string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hi!\n
+        \nTo start chatting you must log in with your google account\n
+        \nYou may choose to observe the chat in the "Lurker" mode but you may not send messages in that mode
+    </string>
 </resources>

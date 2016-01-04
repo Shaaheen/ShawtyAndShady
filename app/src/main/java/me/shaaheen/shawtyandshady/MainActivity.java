@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private String name = "CarlyCatzSnooze";
     private String fullName = "CarlyCatzSnooze";
     private boolean loggedOn = false;
-    public static int counter =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle loginInfo = getIntent().getExtras();
         if (loginInfo != null) {
-            counter++;
             name = loginInfo.getString("Name");
             fullName = loginInfo.getString("FullName");
             loggedOn = true;
@@ -62,13 +60,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Create a new intent with the intention of switching classes/views
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                chatManager.removeListeners();
                 startActivity(intent); //Switch to SlideShow class
                 finish();
             }
         });
 
         //Initialise Chat Manager with the reference to the database
-        chatManager = new ChatManager("https://boiling-torch-6214.firebaseio.com/Messages",this,counter);
+        chatManager = new ChatManager("https://boiling-torch-6214.firebaseio.com/Messages",this);
         }
 
                 //Method to send Messages based off what is written the text box
@@ -84,12 +83,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Method to allow changes to the message display - Allows Chat Manager to change layout element
-    protected void receiveMessage(String user, String newMessage,int verifier){
+    protected void receiveMessage(String user, String newMessage){
         //Add to message on a new line to what is already being displayed
         System.out.println("Received : " + newMessage);
-        if(verifier == counter){
-            messageDisplay.setText(messageDisplay.getText().toString() + user + " > " + newMessage + "\r\n");
-        }
+        messageDisplay.setText(messageDisplay.getText().toString() + user + " > " + newMessage + "\r\n");
     }
 
     protected void messageFailed(){
