@@ -19,10 +19,13 @@ import java.util.Map;
  */
 public class ChatManager {
     Firebase myFirebaseRef; //Link to Firebase online database - used as place to send and receive messages from
-
+    MainActivity mainView;
+    int verifier;
     //Constructor to connect to database
-    ChatManager(String firebaseURL){
+    ChatManager(String firebaseURL,MainActivity main,int verfier) {
+        this.verifier = verfier;
         myFirebaseRef = new Firebase(firebaseURL);
+        this.mainView = main;
         startReceivingMessages();
     }
 
@@ -56,7 +59,8 @@ public class ChatManager {
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
                 Map<String, String> post = snapshot.getValue(Map.class); //Get the Map object that was written
                 System.out.println("Message is :" + post.get("Message"));
-                MainActivity.receiveMessage(post.get("User"),post.get("Message"));
+
+                mainView.receiveMessage(post.get("User"),post.get("Message"),verifier);
             }
 
             //METHODS NEEDED TO BE IMPLEMENTED FOR EVENT LISTENER - MUST BE ADDED TO
