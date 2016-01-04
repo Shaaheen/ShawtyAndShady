@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                         sendMessage(); //When submit button clicked then launch sendMessage method
                     }
                 });
+
         //Initialise Chat Manager with the reference to the database
         chatManager = new ChatManager("https://boiling-torch-6214.firebaseio.com/Messages");
 

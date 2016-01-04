@@ -1,6 +1,7 @@
 package me.shaaheen.shawtyandshady;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -171,6 +173,7 @@ public class LoginActivity extends Activity implements
                 return token;
             }
 
+            //Method that gets launched after the user has attempted to sign in
             @Override
             protected void onPostExecute(String token) {
                 mGoogleLoginClicked = false;
@@ -180,17 +183,29 @@ public class LoginActivity extends Activity implements
                         @Override
                         public void onAuthenticated(AuthData authData) {
                             System.out.println("Here then");
+
+                            //Toast message displayed to user for feedback on successful login
+                            Context context = getApplicationContext();
+                            CharSequence text = "Successfully Logged in. Welcome! ";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                            //Succesful authentication message displayed at the top of the screen to user
                             String toDisp = "Authenticated \r\n Welcome " + authData.getProviderData().get("displayName");
                             textView.setText(toDisp);
 
+                            //Get user details from the google log in
                             String fullName = ((String) authData.getProviderData().get("displayName"));
-                            String name = (fullName.split(" "))[0];
+                            String name = (fullName.split(" "))[0]; //Splits by space to get first name
 
                             //Create a new intent with the intention of switching classes/views
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            //Pass the user data to the main class with the switch
                             intent.putExtra("Name", name);
                             intent.putExtra("FullName",fullName);
-                            startActivity(intent); //Switch to SlideShow class
+                            startActivity(intent); //Switch to MainActivity class
                             finish();
 
                         }
