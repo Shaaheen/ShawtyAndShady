@@ -38,7 +38,11 @@ public class MainActivity extends AppCompatActivity {
             name = loginInfo.getString("Name");
             fullName = loginInfo.getString("FullName");
             loggedOn = true;
-
+            setTitle("Squad - [" + name + "]");
+        }
+        else{
+            setTitle("Squad - [Lurker]");
+            //this.getActionBar().setTitle("Squad - [Lurker]");
         }
 
         //Gets element objects from the layout

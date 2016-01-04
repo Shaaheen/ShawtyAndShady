@@ -107,12 +107,10 @@ public class LoginActivity extends Activity implements
             @Override
             public void onAuthenticated(AuthData authData) {
                 System.out.println("Authenticated");
-                textView.setText("Authenticated");
             }
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-                textView.setText("Not Authenticated");
             }
         });
 
@@ -194,7 +192,7 @@ public class LoginActivity extends Activity implements
 
                             //Succesful authentication message displayed at the top of the screen to user
                             String toDisp = "Authenticated \r\n Welcome " + authData.getProviderData().get("displayName");
-                            textView.setText(toDisp);
+                            textView.setText(textView.getText() + "\r\n" + toDisp);
 
                             //Get user details from the google log in
                             String fullName = ((String) authData.getProviderData().get("displayName"));
@@ -212,7 +210,7 @@ public class LoginActivity extends Activity implements
 
                         @Override
                         public void onAuthenticationError(FirebaseError firebaseError) {
-                            textView.setText("Login failed");
+                            textView.setText(textView.getText() + "\r\n" + "Login failed");
                         }
                     });
                 }
