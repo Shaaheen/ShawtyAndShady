@@ -23,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
     EditText messageBox;
     Button submitButton;
     protected static TextView messageDisplay;
-    private String name = "CarlyCatzSnooze";
-    private String fullName = "CarlyCatzSnooze";
+    //Defaults
+    private String name = "Lurker";
+    private String fullName = "Lurker";
     private boolean loggedOn = false;
 
     @Override
@@ -35,15 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle loginInfo = getIntent().getExtras();
         if (loginInfo != null) {
-            name = loginInfo.getString("Name");
-            fullName = loginInfo.getString("FullName");
-            loggedOn = true;
-            setTitle("Squad - [" + name + "]");
+            loggedOn = loginInfo.getBoolean("logOn");
+            if (loggedOn){
+                name = loginInfo.getString("Name");
+                fullName = loginInfo.getString("FullName");
+            }
         }
-        else{
-            setTitle("Squad - [Lurker]");
-            //this.getActionBar().setTitle("Squad - [Lurker]");
-        }
+        setTitle("Squad - [" + name + "]");
 
         //Gets element objects from the layout
         messageDisplay = (TextView)findViewById(R.id.messageDisplay);
@@ -65,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
                 //Create a new intent with the intention of switching classes/views
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 chatManager.removeListeners();
+
+                //Pass the user data to the main class with the switch
+                intent.putExtra("Name", name);
+                intent.putExtra("FullName",fullName);
+                intent.putExtra("logOn",loggedOn);
+
                 startActivity(intent); //Switch to SlideShow class
                 finish();
             }

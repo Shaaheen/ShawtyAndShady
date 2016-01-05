@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,26 @@ public class LoginActivity extends Activity implements
         myFirebaseRef = new Firebase("https://boiling-torch-6214.firebaseio.com");
         System.out.println("Seconds");
         textView = (TextView) findViewById(R.id.dispText);
+
+        Button backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+
+                        Bundle passedData = getIntent().getExtras(); //Data passed to login page
+                        //Create a new intent with the intention of switching classes/views
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                        //Pass the user data to the main class with the switch (or default data if no user yet)
+                        intent.putExtra("Name", passedData.getString("Name"));
+                        intent.putExtra("FullName",passedData.getString("FullName"));
+                        intent.putExtra("logOn",passedData.getBoolean("logOn"));
+
+                        startActivity(intent); //Switch to MainActivity class
+                        finish();
+                    }
+                });
+
 
         /* *************************************
          *               GOOGLE                *
@@ -203,6 +224,7 @@ public class LoginActivity extends Activity implements
                             //Pass the user data to the main class with the switch
                             intent.putExtra("Name", name);
                             intent.putExtra("FullName",fullName);
+                            intent.putExtra("logOn",true);
                             startActivity(intent); //Switch to MainActivity class
                             finish();
 
