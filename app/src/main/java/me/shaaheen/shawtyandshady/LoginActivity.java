@@ -99,6 +99,7 @@ public class LoginActivity extends Activity implements
         mGoogleLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                textView.setText(textView.getText() + "\r\n" + "\r\n"+ "Authenticating now...");
                 mGoogleLoginClicked = true;
                 if (!mGoogleApiClient.isConnecting()) {
                     if (mGoogleConnectionResult != null) {
